@@ -1,0 +1,24 @@
+application:
+  version: 1.0.0
+  mode: development
+kafka:
+  bootstrapServers: kafka1:19092,kafka2:19093,kafka3:19094
+usecase:
+  -
+    className: com.stream.transactionlog.usecase.EnrichOrderUseCase
+    active: true
+    applicationID: docker_transaction_tailing
+    commitTime: 1000
+    topics:
+      orderTopic: orders
+      orderDetailTopic: order_details
+      aggregateTopic: combined-order-data
+  -
+    className: com.stream.transactionlog.usecase.EnrichCustomerUseCase
+    active: false
+    applicationID: docker_transaction_tailing
+    commitTime: 1000
+    topics:
+      customerTopic: sample.customer
+      addressesTopic: sample.address
+      aggregateTopic: combined-customer-data
